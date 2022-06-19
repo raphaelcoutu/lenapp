@@ -22,6 +22,9 @@ public class Product {
 
     private Integer balance;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Account account;
+
     @OneToMany(mappedBy = "product")
     private Set<ProductTransaction> transactions;
 }

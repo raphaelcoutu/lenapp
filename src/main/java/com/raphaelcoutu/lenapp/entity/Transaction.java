@@ -15,9 +15,6 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Account account;
-
     @Enumerated(EnumType.STRING)
     private TransactionType type;
 

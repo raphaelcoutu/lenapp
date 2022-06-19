@@ -17,5 +17,5 @@ public class Account {
     private Long balance;
 
     @OneToMany(mappedBy = "account")
-    private List<Transaction> transactions;
+    private List<Product> products;
 }
