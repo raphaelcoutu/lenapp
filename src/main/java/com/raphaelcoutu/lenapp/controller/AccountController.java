@@ -12,6 +12,7 @@ import com.raphaelcoutu.lenapp.service.AccountService;
 import com.raphaelcoutu.lenapp.service.ProductService;
 import com.raphaelcoutu.lenapp.service.ProductTransactionService;
 import com.raphaelcoutu.lenapp.service.TransactionService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/accounts")
+@PreAuthorize("@accessController.checkAccess()")
 public class AccountController {
 
     private final AccountService accountService;

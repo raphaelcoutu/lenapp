@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 public interface ProductTransactionRepository extends JpaRepository<ProductTransaction, Long> {
     @Query("""
     select pt from ProductTransaction pt
-    left join pt.product p
-    left join pt.transaction t
+    left join fetch pt.product p
+    left join fetch pt.transaction t
     where p.account.id = :accountId
     """)
     Iterable<ProductTransaction> findProductTransactionsByAccountId(Long accountId);
