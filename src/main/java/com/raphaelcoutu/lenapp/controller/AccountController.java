@@ -9,9 +9,7 @@ import com.raphaelcoutu.lenapp.mapper.ProductMapper;
 import com.raphaelcoutu.lenapp.mapper.ProductTransactionMapper;
 import com.raphaelcoutu.lenapp.mapper.TransactionMapper;
 import com.raphaelcoutu.lenapp.service.AccountService;
-import com.raphaelcoutu.lenapp.service.ProductService;
-import com.raphaelcoutu.lenapp.service.ProductTransactionService;
-import com.raphaelcoutu.lenapp.service.TransactionService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,37 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/accounts")
 @PreAuthorize("@accessController.checkAccess()")
+@RequiredArgsConstructor
 public class AccountController {
 
     private final AccountService accountService;
+
     private final AccountMapper accountMapper;
-
-    private final ProductService productService;
     private final ProductMapper productMapper;
-
-    private final TransactionService transactionService;
     private final TransactionMapper transactionMapper;
-
-    private final ProductTransactionService ptService;
     private final ProductTransactionMapper ptMapper;
-
-    public AccountController(AccountService accountService,
-                             AccountMapper accountMapper,
-                             ProductService productService,
-                             ProductMapper productMapper,
-                             TransactionService transactionService,
-                             TransactionMapper transactionMapper,
-                             ProductTransactionService ptService,
-                             ProductTransactionMapper ptMapper) {
-        this.accountService = accountService;
-        this.accountMapper = accountMapper;
-        this.productService = productService;
-        this.productMapper = productMapper;
-        this.transactionService = transactionService;
-        this.transactionMapper = transactionMapper;
-        this.ptService = ptService;
-        this.ptMapper = ptMapper;
-    }
 
     @GetMapping
     public Iterable<AccountListDto> getAllAccounts() {
@@ -66,18 +42,18 @@ public class AccountController {
 
     @GetMapping("/{id}/products")
     public Iterable<ProductListDto> getAccountProducts(@PathVariable Long id) {
-        return productMapper.entitiesToListDto(productService.getProductsByAccountId(id));
+        return productMapper.entitiesToListDto(accountService.getProductsByAccountId(id));
     }
 
     @GetMapping("/{id}/transactions")
     public Iterable<TransactionListDto> getAccountTransactions(@PathVariable Long id) {
-        Iterable<Transaction> transactions = transactionService.getProductsByAccountId(id);
+        Iterable<Transaction> transactions = accountService.getTransactionsByAccountId(id);
         return transactionMapper.entitiesToListDto(transactions);
     }
 
     @GetMapping("/{id}/productTransactions")
     public Iterable<ProductTransactionListDto> getAccountProductTransactions(@PathVariable Long id) {
-        Iterable<ProductTransaction> pTransactions = ptService.getProductTransactionsByAccountId(id);
+        Iterable<ProductTransaction> pTransactions = accountService.getProductTransactionsByAccountId(id);
         return ptMapper.entitiesToListDto(pTransactions);
     }
 }

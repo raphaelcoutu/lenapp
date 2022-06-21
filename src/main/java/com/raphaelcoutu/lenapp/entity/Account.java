@@ -18,4 +18,13 @@ public class Account {
 
     @OneToMany(mappedBy = "account")
     private List<Product> products;
+
+    public Account() {
+    }
+
+    public Account(Long id, String name, Long balance) {
+        this.id = id;
+        this.name = name;
+        this.balance = balance;
+    }
 }
